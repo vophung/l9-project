@@ -21,5 +21,6 @@
       <!-- page-body-wrapper ends -->
     </div>
     @include('templates.pages.blocks.foot')
+    @yield('templates.pages.blocks.foot-content')
   </body>
 </html>

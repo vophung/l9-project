@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Socialite\LoginController as SocialiteLoginController;
+use App\Http\Controllers\User\ForgotController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\RegisterController;
+use App\Jobs\NewJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +26,34 @@ Route::get('/', function () {
 Route::controller(LoginController::class)->name('login.')->group(function() {
     Route::get('/login', 'index')->name('index');
     Route::post('/login', 'store')->name('store');
+    Route::post('/logout', 'logout')->name('logout');
 });
 
 Route::controller(RegisterController::class)->name('register.')->group(function() {
     Route::get('/register', 'index')->name('index');
     Route::post('/register', 'store')->name('store');
+});
+
+Route::controller(ForgotController::class)->name('password.')->group(function() {
+    Route::get('/forgot-password','index')->name('index');
+    Route::any('/password/reset/{token}/email={email}','reset')->name('reset');
+    Route::post('/forgot-password','email')->name('email');
+    Route::post('/password/reset','update')->name('update');
+});
+
+Route::controller(DashboardController::class)->middleware(['checkLogin'])->name('admin.')->group(function() {
+    Route::get('/dashboard', 'index')->name('index');
+});
+
+Route::get('/login/google/redirect', [SocialiteLoginController::class, 'redirect'])->name('google.redirect');
+Route::get('/login/google/callback', [SocialiteLoginController::class, 'callback'])->name('google.callback');
+
+Route::get('/login/facebook/redirect', [SocialiteLoginController::class, 'redirectFB'])->name('facebook.redirect');
+Route::get('/login/facebook/callback', [SocialiteLoginController::class, 'callbackFB'])->name('facebook.callback');
+
+Route::get('/verify', [RegisterController::class, 'verifyUser'])->name('verify.user');
+Route::get('/verify?code={code}')->name('verify.code');
+
+Route::get('/test', function(){
+    dd(config('app.url') . ':8000');
 });
