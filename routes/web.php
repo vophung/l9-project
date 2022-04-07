@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Shopping\CartController;
+use App\Http\Controllers\Shopping\ProductController;
 use App\Http\Controllers\Socialite\LoginController as SocialiteLoginController;
 use App\Http\Controllers\User\ForgotController;
 use Illuminate\Support\Facades\Route;
@@ -18,6 +21,18 @@ use App\Jobs\NewJob;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::controller(ProductController::class)->name('product.')->group(function(){
+    Route::get('/product', 'index')->name('index');
+});
+
+Route::controller(CartController::class)->name('cart.')->group(function(){
+    Route::get('/cart', 'index')->name('index');
+    Route::post('/cart', 'store')->name('store');
+    Route::post('/update', 'update')->name('update');
+    Route::post('/delete', 'destroy')->name('destroy');
+    Route::post('/clear', 'clear')->name('clear');
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,6 +60,10 @@ Route::controller(DashboardController::class)->middleware(['checkLogin'])->name(
     Route::get('/dashboard', 'index')->name('index');
 });
 
+Route::middleware(['checkLogin'])->group(function() {
+    Route::resource('category', CategoryController::class);
+});
+
 Route::get('/login/google/redirect', [SocialiteLoginController::class, 'redirect'])->name('google.redirect');
 Route::get('/login/google/callback', [SocialiteLoginController::class, 'callback'])->name('google.callback');
 
@@ -53,7 +72,3 @@ Route::get('/login/facebook/callback', [SocialiteLoginController::class, 'callba
 
 Route::get('/verify', [RegisterController::class, 'verifyUser'])->name('verify.user');
 Route::get('/verify?code={code}')->name('verify.code');
-
-Route::get('/test', function(){
-    dd(config('app.url') . ':8000');
-});
