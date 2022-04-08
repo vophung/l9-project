@@ -19,4 +19,5 @@
 <!-- Custom js for this page -->
 <script src="{{asset('assets/js/dashboard.js')}}"></script>
 <script src="{{asset('jquery-3.6.0.min.js')}}"></script>
+<script src="{{asset('assets/js/toastr.min.js')}}"></script>
 <!-- End custom js for this page -->

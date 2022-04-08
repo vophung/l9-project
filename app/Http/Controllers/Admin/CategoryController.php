@@ -56,11 +56,11 @@ class CategoryController extends Controller
 
             DB::commit();
 
-            return redirect()->back();
+            return redirect()->back()->with('message', 'Data add successfully');
         }catch (Exception $e) {
             DB::rollback();
 
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Something went wrong');
         }
     }
 
@@ -114,11 +114,11 @@ class CategoryController extends Controller
 
             DB::commit();
 
-            return redirect()->back();
+            return redirect()->back()->with('message', 'Data updated successfully');
         }catch (Exception $e) {
             DB::rollback();
 
-            return redirect()->back();
+            return redirect()->back()->with('error', 'Something went wrong');
         }
     }
 
