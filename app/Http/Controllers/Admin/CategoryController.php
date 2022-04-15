@@ -134,11 +134,15 @@ class CategoryController extends Controller
 
         try {
             $category = Category::find($id);
+            $parent_id = Category::where('parent_id', $category->id)->select('id')->get();
             $category->delete();
 
             DB::commit();
 
-            return response()->json($category->title);
+            return response()->json([
+                'cat_id' => $category->id,
+                'parent_id' => $parent_id
+            ]);
         }catch (Exception $e) {
             DB::rollback();
 

@@ -1,3 +1,30 @@
+$(document).ready(function() {
+    // Setup - add a text input to each footer cell
+    $('#table-products tfoot th').each( function () {
+        var title = $(this).text();
+        $(this).html( '<input type="text" placeholder="Search '+title+'" />' );
+    } );
+ 
+    // DataTable
+    var table = $('#table-products').DataTable({
+        initComplete: function () {
+            // Apply the search
+            this.api().columns().every( function () {
+                var that = this;
+ 
+                $( 'input', this.footer() ).on( 'keyup change clear', function () {
+                    if ( that.search() !== this.value ) {
+                        that
+                            .search( this.value )
+                            .draw();
+                    }
+                } );
+            } );
+        }
+    });
+ 
+} );
+
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -6,13 +33,13 @@ $.ajaxSetup({
 
 $(document).ready(function() {
 
-    $('#datatable-category tbody').on('click', 'tr td #delete-button', function (e) {
+    $('#table-products tbody').on('click', 'tr td #delete-button', function (e) {
         e.preventDefault();
 
         var detailId = $(this).attr('data-id');
 
         var tr = $(this).parents('tr');
-
+        console.log(tr);
         Swal.fire({
             title: 'Bạn có chắc chắn muốn thực hiện thao tác này?',
             text: 'Dữ liệu của bạn sẽ bị mất',
@@ -25,23 +52,16 @@ $(document).ready(function() {
             if(result.isConfirmed){
                 $.ajax({
                     type: 'DELETE',
-                    url: '/category/' + detailId,
+                    url: '/product/' + detailId,
                     cache: false,
                     success: function(data){
                         Swal.fire({
                             icon: 'success',
-                            text: 'XÓA THÀNH CÔNG',
+                            text: 'XÓA '+ data +' THÀNH CÔNG',
                             showConfirmButton: false,
                             timer: 1500
                         }).then( () => {
-                            let tr_cat = $("#show-data tr button[data-id='"+ data.cat_id +"']");
-                            tr_cat.parents('tr').remove();
-                            if(data.parent_id.length > 0){
-                                $.each(data.parent_id, function(k, v){
-                                    let tr_child = $("#show-data tr button[data-id='"+ v.id +"']");
-                                    console.log(tr_child.parents('tr').remove());
-                                });
-                            }
+                            tr.remove();
                         })
                     },
                     error: function(){

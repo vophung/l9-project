@@ -26,6 +26,8 @@ class User extends Authenticatable
         'is_verified',
         'google_id'
     ];
+    
+    public $incrementing = false; 
 
     /**
      * The attributes that should be hidden for serialization.

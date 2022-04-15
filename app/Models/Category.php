@@ -11,11 +11,15 @@ class Category extends UuidModel
 
     protected $table = 'categories';
 
-    protected $fillable = ['title', 'metaTitle', 'product_id', 'slug'];
+    protected $fillable = ['title', 'metaTitle', 'parent_id', 'slug'];
     
     public $incrementing = false;
 
     public function parent_category() {
         return $this->belongsTo('App\Models\Category', 'parent_id');
+    }
+
+    public function product() {
+        return $this->belongsToMany('App\Models\Product');
     }
 }

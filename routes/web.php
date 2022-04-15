@@ -2,14 +2,13 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Shopping\CartController;
-use App\Http\Controllers\Shopping\ProductController;
+use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Execution\UploadImagesController;
 use App\Http\Controllers\Socialite\LoginController as SocialiteLoginController;
 use App\Http\Controllers\User\ForgotController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\LoginController;
 use App\Http\Controllers\User\RegisterController;
-use App\Jobs\NewJob;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,18 +20,6 @@ use App\Jobs\NewJob;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::controller(ProductController::class)->name('product.')->group(function(){
-    Route::get('/product', 'index')->name('index');
-});
-
-Route::controller(CartController::class)->name('cart.')->group(function(){
-    Route::get('/cart', 'index')->name('index');
-    Route::post('/cart', 'store')->name('store');
-    Route::post('/update', 'update')->name('update');
-    Route::post('/delete', 'destroy')->name('destroy');
-    Route::post('/clear', 'clear')->name('clear');
-});
 
 Route::get('/', function () {
     return view('welcome');
@@ -62,6 +49,16 @@ Route::controller(DashboardController::class)->middleware(['checkLogin'])->name(
 
 Route::middleware(['checkLogin'])->group(function() {
     Route::resource('category', CategoryController::class);
+    Route::resource('product', ProductController::class);
+    Route::get('/product/create/{id}/upload-images', [UploadImagesController::class, 'upload_images_product'])->name('product.uploads');
+    Route::post('/product/create/{id}/upload-images/store', [UploadImagesController::class, 'upload_images_product_store'])->name('product.uploads.store');
+    Route::get('/product/create/{id}/upload-images/edit', [UploadImagesController::class, 'upload_images_product_edit'])->name('product.uploads.edit');;
+    Route::post('/product/create/{id}/upload-images/update', [UploadImagesController::class, 'upload_images_product_update'])->name('product.uploads.update');
+    Route::get('/product/set/images/{id}/upload-images', [UploadImagesController::class, 'set_upload_images_product'])->name('product.uploads.set');
+    Route::post('/product/set/images/{id}/upload-images/store', [UploadImagesController::class, 'set_upload_images_product_store'])->name('product.uploads.set.store');
+    Route::get('/product/set/images/{id}/upload-images/edit', [UploadImagesController::class, 'set_upload_images_product_edit'])->name('product.uploads.set.edit');
+    Route::post('/product/set/images/{id}/upload-images/update', [UploadImagesController::class, 'set_upload_images_product_update'])->name('product.uploads.set.update');
+    Route::post('getProduct', [ProductController::class, 'getProduct'])->name('product.getProduct');
 });
 
 Route::get('/login/google/redirect', [SocialiteLoginController::class, 'redirect'])->name('google.redirect');

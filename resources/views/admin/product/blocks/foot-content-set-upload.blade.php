@@ -3,7 +3,9 @@
 <script src="{{asset('assets/vendors/js/vendor.bundle.base.js')}}"></script>
 <!-- endinject -->
 <!-- Plugin js for this page -->
-<script src="{{asset('assets/vendors/chart.js/Chart.min.js')}}"></script>
+<script src="{{asset('jquery-3.6.0.min.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/choices.js@9.0.1/public/assets/scripts/choices.min.js"></script>
+<script src="{{asset('catalog/set-upload/index.js')}}"></script>
 <script src="{{asset('assets/vendors/progressbar.js/progressbar.min.js')}}"></script>
 <script src="{{asset('assets/vendors/jvectormap/jquery-jvectormap.min.js')}}"></script>
 <script src="{{asset('assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js')}}"></script>
@@ -17,7 +19,3 @@
 <script src="{{asset('assets/js/todolist.js')}}"></script>
 <!-- endinject -->
 <!-- Custom js for this page -->
-<script src="{{asset('assets/js/dashboard.js')}}"></script>
-<script src="{{asset('jquery-3.6.0.min.js')}}"></script>
-<script src="{{asset('assets/js/toastr.min.js')}}"></script>
-<!-- End custom js for this page -->

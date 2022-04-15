@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    @include('admin.blocks.head')
+    @yield('styles')
   </head>
   <body>
     <div class="container-scroller">
@@ -26,7 +26,6 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
-    @include('admin.blocks.foot')
-    @yield('js-content')
+    @yield('scripts')
   </body>
 </html>

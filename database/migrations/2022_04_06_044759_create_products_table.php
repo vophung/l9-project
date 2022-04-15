@@ -22,7 +22,7 @@ return new class extends Migration
             $table->mediumText('sumary')->nullable();
             $table->smallInteger('type')->nullable();
             $table->string('sku', 100)->nullable();
-            $table->float('price')->nullable();
+            $table->bigInteger('price')->nullable();
             $table->float('discount')->nullable();
             $table->smallInteger('quantity')->nullable();
             $table->tinyInteger('shop')->nullable();

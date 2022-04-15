@@ -1,4 +1,7 @@
 @extends('admin.master')
+@section('styles')
+@include('admin.category.blocks.head-content-create')
+@endsection
 @section('page-header')
 <div class="page-header">
     <h3 class="page-title"> Form elements </h3>
@@ -53,6 +56,6 @@
     </div>
 </div>
 @endsection
-@section('js-content')
-@include('admin.category.blocks.js-content')
+@section('scripts')
+@include('admin.category.blocks.foot-content-create')
 @endsection

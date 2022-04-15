@@ -1,4 +1,7 @@
 @extends('admin.master')
+@section('styles')
+@include('admin.dashboard.blocks.head-content-index')
+@endsection
 @section('content')
 <div class="row">
     <div class="col-12 grid-margin stretch-card">
@@ -660,4 +663,7 @@
       </div>
     </div>
 </div>
+@endsection
+@section('scripts')
+@include('admin.dashboard.blocks.foot-content-index')
 @endsection

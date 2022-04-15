@@ -42,6 +42,8 @@ class LoginController extends Controller
         try {
             $user = User::where('email', $data->email)->first();
 
+            // return $user;
+
             if(!$user) {
                 $user = new User();
                 $user->name = $data->name;
@@ -58,6 +60,7 @@ class LoginController extends Controller
                     'password' => null
                 ]);    
             }
+
 
             DB::commit();
 
