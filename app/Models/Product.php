@@ -16,6 +16,10 @@ class Product extends UuidModel
 
     public $incrementing = false;
 
+    public function cart() {
+        return $this->belongsToMany('App\Models\Cart');
+    }
+
     public function user() {
         return $this->belongsTo('App\Models\User');
     }
@@ -26,5 +30,13 @@ class Product extends UuidModel
 
     public function images() {
         return $this->hasMany('App\Models\ProductImage');
+    }
+
+    public function images_default() {
+        return $this->hasMany('App\Models\ProductImage')->where('product_image_caption', 'default');
+    }
+
+    public function images_hover() {
+        return $this->hasMany('App\Models\ProductImage')->where('product_image_caption', 'hover');
     }
 }

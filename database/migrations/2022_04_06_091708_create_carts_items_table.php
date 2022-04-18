@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('cart_id');
             $table->foreign('cart_id')->references('id')->on('carts')->onDelete('cascade');
             $table->string('sku', 100)->nullable();
-            $table->float('price')->nullable();
+            $table->bigInteger('price')->nullable();
             $table->float('discount')->nullable();
             $table->smallInteger('quantity')->nullable();
             $table->tinyInteger('active');

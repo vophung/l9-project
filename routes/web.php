@@ -1,10 +1,13 @@
 <?php
 
+use App\Http\Controllers\Admin\AccountController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Execution\CartController;
 use App\Http\Controllers\Execution\UploadImagesController;
 use App\Http\Controllers\Socialite\LoginController as SocialiteLoginController;
+use App\Http\Controllers\Themes\NavigationController;
 use App\Http\Controllers\User\ForgotController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\LoginController;
@@ -23,6 +26,22 @@ use App\Http\Controllers\User\RegisterController;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::controller(NavigationController::class)->name('navigation.')->group(function() {
+    Route::get('index', 'home_page')->name('home_page');
+    Route::get('shop', 'shop_page')->name('shop_page');
+    Route::get('product-details/{slug}', 'product_detail')->name('product_detail');
+    Route::get('shop/{slug}', 'shop_slug')->name('shop-slug');
+});
+
+Route::controller(AccountController::class)->name('account.')->group(function() {
+    Route::get('account', 'index')->name('index');
+    Route::post('account', 'store')->name('store');
+});
+
+Route::controller(CartController::class)->name('cart.')->group(function() {
+    Route::post('cart','store')->name('store');
 });
 
 Route::controller(LoginController::class)->name('login.')->group(function() {

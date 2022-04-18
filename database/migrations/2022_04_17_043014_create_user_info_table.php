@@ -13,14 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->string('id', 36)->index()->unique();
+        Schema::create('user_info', function (Blueprint $table) {
+            $table->id();
             $table->string('user_id');
-            $table->string('token', 100)->nullable();
-            $table->string('name', 75)->nullable();
-            $table->string('address')->nullable();
             $table->string('mobile')->nullable();
-            $table->smallInteger('status')->nullable();
+            $table->string('photo')->nullable();
+            $table->string('address')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
@@ -33,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('user_info');
     }
 };

@@ -48,6 +48,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function info() {
+        return $this->hasOne('App\Models\UserInfo');
+    }
+
+    public function cart() {
+        return $this->hasMany('App\Models\Cart');
+    }
+
     public static function loginWithAccount($data) {
         $user = User::where('email', $data['email'])->select('is_verified')->first();
 

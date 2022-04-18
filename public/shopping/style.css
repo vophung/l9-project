@@ -11,3 +11,12 @@
     /* ---------------------------------------
     ##### - PLACE YOUR CUSTOM CSS HERE - #####
     --------------------------------------- */
+    
+
+
+  .product-img img {
+      height: 417px;
+  }
+  .single-product-wrapper{
+    display: inline-block;
+  }
